@@ -16,21 +16,42 @@
   var database;
 
   //Create DB & ref to DB
-  firebase.database();
+  database = firebase.database();
+  var ref = database.ref('scores');
 
+  ref.on('value', gotData, errData);
+
+  function gotData(data){
+    var scores = data.val();
+    var keys = Object.keys(scores);
+
+    for(var i = 0; i < keys.length; i++){
+      var k = keys[i];
+      var name = scores[k].name;
+      var score = scores[k].score;
+      console.log(name, score);
+    }
+  }
+
+  function errData(err){
+    console.log('Error!');
+    console.log(err);
+  }
+
+  //Increment Score
   function numInc(){
     score++;
   }
 
+  //Submit Score, run through DB
   function submitScore(){
-    var ref = database.ref('scores');
 
     //Add data to store
     var data = {
-      name: document.getElementsByName('initials'),
-      score: document.getElementsByName('score'),
+      score: score,
+      name: document.getElementById('initials').value
     }
-    
+
     //Push data into DB
     ref.push(data);
   }
@@ -43,7 +64,7 @@
   <body>
     <form action="">
       <input type="button" name="score" value="inc" onclick="numInc()">
-      <input type="text" name="initials" value="">
+      <input type="text" name="initials" value="" id="initials">
       <input type="button" onclick="submitScore()">
     </form>
   </body>
