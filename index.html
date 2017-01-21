@@ -9,4 +9,32 @@
     messagingSenderId: "1097530930112"
   };
   firebase.initializeApp(config);
+  console.log(firebase);
+
+  //Create DB & ref to DB
+  var database = firebase.database;
+  var ref = database.ref('scores');
+
+  //Add data to store
+  var data = {
+    name: "DTS",
+    score: 43,
+  }
+
+  //Push data into DB
+  ref.push(data);
+
 </script>
+
+<html>
+  <head>
+    <title>Testing firebase out!</title>
+  </head>
+  <body>
+    <form action="">
+      <input type="button">
+      <input type="button">
+      <input type="button">
+    </form>
+  </body>
+</html>
