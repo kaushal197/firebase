@@ -9,21 +9,31 @@
     messagingSenderId: "1097530930112"
   };
   firebase.initializeApp(config);
-  console.log(firebase);
+  //console.log(firebase);
+
+  var score = 0;
+  var initials;
+  var database;
 
   //Create DB & ref to DB
-  var database = firebase.database();
-  var ref = database.ref('scores');
+  firebase.database();
 
-  //Add data to store
-  var data = {
-    name: "DTS",
-    score: 43,
+  function numInc(){
+    score++;
   }
 
-  //Push data into DB
-  ref.push(data);
+  function submitScore(){
+    var ref = database.ref('scores');
 
+    //Add data to store
+    var data = {
+      name: document.getElementsByName('initials'),
+      score: document.getElementsByName('score'),
+    }
+    
+    //Push data into DB
+    ref.push(data);
+  }
 </script>
 
 <html>
@@ -32,9 +42,9 @@
   </head>
   <body>
     <form action="">
-      <input type="button">
-      <input type="button">
-      <input type="button">
+      <input type="button" name="score" value="inc" onclick="numInc()">
+      <input type="text" name="initials" value="">
+      <input type="button" onclick="submitScore()">
     </form>
   </body>
 </html>
